@@ -1,76 +1,36 @@
-# Fake News Detection Project
 
-## Problem Statement
+# Dataset Documentation: Fake News Detection
 
-The goal of this project is to build a machine learning model that can identify fake news articles. We will use two datasets, one containing real news and another containing fake news, to train and evaluate the model.
+## 1. Overview
 
-## Dataset Overview
+This dataset is used for training a machine learning model to classify news articles as either Fake or Real. It consists of textual news content and corresponding labels.
 
-Two CSV files are used in this project:
+## 2. Data Structure
 
-- Real News Dataset (21,417 entries)
+The dataset contains 9,900 rows and 2 columns:
 
-- Fake News Dataset (23,481 entries)
+- Text (object): The content of the news article.
 
-## Dataset Structure
+- Label (object): The classification of the article, either "Fake" or "Real".
 
-Both datasets contain the following columns:
+## 3. Data Cleaning Process
 
-- title - The headline of the news article.
+3.1 Handling Missing Values
 
-- text - The main content of the article.
+- No missing values were found in either the "Text" or "Label" columns.
 
-- subject - The category of the news.
+3.2 Identifying and Removing Duplicates
 
-- date - The publication date.
+- Initially, 35 duplicate rows were detected.
 
-## Initial Data Analysis
+- All duplicate rows were successfully removed, ensuring that the dataset contains only unique news articles.
 
-**Missing Values Check:** 
+4. Dataset Quality Summary
 
-- No missing values found in either dataset.
+✅ No missing values
 
-- Command used: df.isnull().sum() ✅
+✅ No duplicate rows
 
-**Data Types:**
+✅ Balanced structure with well-defined labels
 
-- All columns are of type object (text).
-
-- The date column may require preprocessing.
-
-**Duplicate Check:**
-
-- Running df.duplicated().sum() to identify duplicate rows.
-
-- Need to decide whether to remove duplicates if found.
-
-# Next Steps
-
-1. Handle duplicate rows (if necessary).
-
-2. Preprocess the data (e.g., convert dates, clean text).
-
-3. Split data into training and testing sets.
-
-4. Train a machine learning model.
-
-5. Evaluate and optimize the model.
-
-6. Deploy the model.
-
-# Data Cleaning: Handling Duplicates
-
-**Dataset Overview:**
-- The two datasets (True and Fake) were initially inspected for duplicates. The True dataset contained 206 duplicate rows, and the Fake dataset contained 3 duplicate rows.
-
-**Data Cleaning Process:**
-- After detecting duplicates, both datasets were cleaned by removing duplicate rows using the drop_duplicates() method in pandas.
-
-**Outcome:**
-- After cleaning, no duplicate rows remain in either dataset, confirming that the data is now free of duplicates.
-
-# Repository Setup
-
-**GitHub Repository Created: ✅**
-
-**Files Pushed to GitHub: ✅**
+📂 Memory usage: 154.8 KB
