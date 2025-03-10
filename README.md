@@ -34,3 +34,7 @@ The dataset contains 9,900 rows and 2 columns:
 ✅ Balanced structure with well-defined labels
 
 📂 Memory usage: 154.8 KB
+
+
+## Resources
+- dataset : https://www.kaggle.com/datasets/vishakhdapat/fake-news-detection
