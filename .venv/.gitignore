@@ -1,0 +1,10 @@
+# created by virtualenv automatically
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+.env/
+.venv/
+.idea/
+*.log
+
