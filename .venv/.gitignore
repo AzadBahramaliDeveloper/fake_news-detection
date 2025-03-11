@@ -1,0 +1,20 @@
+# Python-related ignores
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Virtual environment directories
+.env/
+.venv/
+
+# Ignore bin and lib directories
+bin/
+lib/
+
+
+# IDE/editor settings
+.idea/
+
+# Log files
+*.log
