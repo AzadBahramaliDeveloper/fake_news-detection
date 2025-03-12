@@ -1,0 +1,29 @@
+# Ignore virtual environments
+venv/
+.venv/
+
+# Ignore compiled files
+*.pyc
+__pycache__/
+
+# Ignore large binary files that should not be committed
+*.npy
+*.pkl
+*.gz
+*.bz2
+*.gzip
+*.lzma
+*.xz
+
+# Ignore temporary and build files
+*.log
+*.tmp
+*.swp
+
+# Ignore system-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore unnecessary folders
+bin/
+lib/
