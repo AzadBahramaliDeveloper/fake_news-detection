@@ -1,0 +1,6 @@
+pandas
+nltk
+gitpython
+scikit-learn
+matplotlib
+tensorflow
