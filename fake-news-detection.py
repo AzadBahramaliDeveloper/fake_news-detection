@@ -20,6 +20,8 @@ true_and_fake_data = pd.read_csv('/Users/diana/PycharmProjects/fake_news-detecti
 clean_true_dataset = true_and_fake_data.drop_duplicates()
 nltk.download('stopwords')
 nltk.download('punkt')
+print("Proceeding with the application...")
+
 
 stop_words = set(stopwords.words('english'))
 stemmer = PorterStemmer()
@@ -66,17 +68,18 @@ sns.countplot(data=clean_true_dataset, x="label", hue="label", palette="viridis"
 plt.title("Distribution of Fake vs. Real News")
 plt.xlabel("News Type")
 plt.ylabel("Count")
+plt.tight_layout()
 plt.show()
 
-# Word Cloud for Fake News
+# Text Word Visualization for Fake News
 fake_text = " ".join(clean_true_dataset[clean_true_dataset["label"] == "Fake"]["cleaned_text"])
 wordcloud_fake = WordCloud(width=800, height=400, background_color="black").generate(fake_text)
 
-# Word Cloud for Real News
+# Text Word Visualization for Real News
 real_text = " ".join(clean_true_dataset[clean_true_dataset["label"] == "Real"]["cleaned_text"])
 wordcloud_real = WordCloud(width=800, height=400, background_color="white").generate(real_text)
 
-# Plot word clouds
+# Plot word frequency visualizations
 fig, ax = plt.subplots(1, 2, figsize=(12, 6))
 ax[0].imshow(wordcloud_fake, interpolation="bilinear")
 ax[0].set_title("Most Common Words in Fake News")
@@ -86,6 +89,7 @@ ax[1].imshow(wordcloud_real, interpolation="bilinear")
 ax[1].set_title("Most Common Words in Real News")
 ax[1].axis("off")
 
+plt.tight_layout()
 plt.show()
 
 # Confusion Matrix
