@@ -4,6 +4,11 @@ from nltk import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 import string
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, classification_report
+
 true_and_fake_data = pd.read_csv('/Users/diana/PycharmProjects/fake_news-detection/dataset/fake_and_real_news.csv')
 
 
@@ -55,3 +60,37 @@ clean_true_dataset.loc[:, 'cleaned_text'] = clean_true_dataset['Text'].apply(pre
 # Check the first few rows of the cleaned text
 print(clean_true_dataset[['Text', 'cleaned_text']].head())
 
+# Split the data into training and testing sets
+X = clean_true_dataset['cleaned_text']
+y = clean_true_dataset['label']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+print(f"Training data size: {len(X_train)}")
+print(f"Test data size: {len(X_test)}")
+
+# Initialize the TF-IDF vectorizer
+vectorizer = TfidfVectorizer()
+
+# Fit and transform the training data, then transform the test data
+X_train_tfidf = vectorizer.fit_transform(X_train)
+X_test_tfidf = vectorizer.transform(X_test)
+
+print(f"Training feature shape: {X_train_tfidf.shape}")
+print(f"Test feature shape: {X_test_tfidf.shape}")
+
+# Initialize the logistic regression model
+model = LogisticRegression()
+
+# Train the model
+model.fit(X_train_tfidf, y_train)
+
+# Predict on the test set
+y_pred = model.predict(X_test_tfidf)
+
+# Calculate accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy: {accuracy:.4f}")
+
+# Detailed classification report
+print(classification_report(y_test, y_pred, target_names=["Fake", "Real"]))
