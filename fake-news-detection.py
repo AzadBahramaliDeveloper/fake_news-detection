@@ -1,16 +1,22 @@
-import pandas as pd
+import string
+
+import matplotlib.pyplot as plt
 import nltk
+import pandas as pd
+import seaborn as sns
+from keras.src.callbacks import history
 from nltk import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
-import string
-from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report
+from sklearn.model_selection import train_test_split
+from wordcloud import WordCloud
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+
 
 true_and_fake_data = pd.read_csv('/Users/diana/PycharmProjects/fake_news-detection/dataset/fake_and_real_news.csv')
-
 
 print("The true data:")
 print(true_and_fake_data.head())
@@ -94,3 +100,49 @@ print(f"Accuracy: {accuracy:.4f}")
 
 # Detailed classification report
 print(classification_report(y_test, y_pred, target_names=["Fake", "Real"]))
+
+# Count of Fake and Real news
+plt.figure(figsize=(6, 4))
+sns.countplot(data=clean_true_dataset, x="label", palette="viridis")
+plt.title("Distribution of Fake vs. Real News")
+plt.xlabel("News Type")
+plt.ylabel("Count")
+plt.show()
+
+# Generate a word cloud for fake news
+fake_text = " ".join(clean_true_dataset[clean_true_dataset["Label"] == "Fake"]["cleaned_text"])
+wordcloud_fake = WordCloud(width=800, height=400, background_color="black").generate(fake_text)
+
+# Generate a word cloud for real news
+real_text = " ".join(clean_true_dataset[clean_true_dataset["Label"] == "Real"]["cleaned_text"])
+wordcloud_real = WordCloud(width=800, height=400, background_color="white").generate(real_text)
+
+# Plot the word clouds
+fig, ax = plt.subplots(1, 2, figsize=(12, 6))
+ax[0].imshow(wordcloud_fake, interpolation="bilinear")
+ax[0].set_title("Most Common Words in Fake News")
+ax[0].axis("off")
+
+ax[1].imshow(wordcloud_real, interpolation="bilinear")
+ax[1].set_title("Most Common Words in Real News")
+ax[1].axis("off")
+
+plt.show()
+
+# Generate confusion matrix
+cm = confusion_matrix(y_test, y_pred)
+
+# Plot confusion matrix
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=["Fake", "Real"])
+disp.plot(cmap="Blues")
+plt.title("Confusion Matrix")
+plt.show()
+
+plt.figure(figsize=(10, 5))
+plt.plot(history.history["accuracy"], label="Train Accuracy")
+plt.plot(history.history["val_accuracy"], label="Validation Accuracy")
+plt.xlabel("Epochs")
+plt.ylabel("Accuracy")
+plt.title("Model Accuracy Over Epochs")
+plt.legend()
+plt.show()
